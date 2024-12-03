@@ -28,3 +28,7 @@ H/W회로, S/W(F/W)개발 : 최의현
 2. 불꽃감지센서의 센서값 전송속도 딜레이로 인해서 Task내에 osDelay초를 1ms로 설정함.
 3.  적외선 거리센서는 서미스터 같은 온도센서와 같이 장애물이 가까워질수록 센서값이 커짐, 이를 계산하여 거리값 함수 식 코드를 세워서 가까워지면 센서값이 작아지도록 변경시킴.
 
+## 동작 영상
+https://github.com/user-attachments/assets/96241d8c-af59-4c15-99d0-e84967e38dbe
+
+https://github.com/user-attachments/assets/81be6f6b-a8d2-4311-8362-08faf38e36d0
