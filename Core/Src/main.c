@@ -19,10 +19,10 @@ uint8_t Distance  = 0;
 
 
 
-char buf[500];
-char buf2[500];
-char buf3[500];
-char buf4[500];
+char buf[50];
+char buf2[50];
+char buf3[50];
+char buf4[50];
 
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
