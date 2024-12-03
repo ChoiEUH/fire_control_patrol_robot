@@ -507,15 +507,15 @@ void Pause(){
 }
 
 void back(){
-	     GPIOF->ODR &= ~(0x1000);
-		 GPIOF->ODR |= 0x2000;
-		 GPIOF->ODR |= 0x4000;
-		 GPIOF->ODR &= ~(0x8000);
+	GPIOF->ODR &= ~(0x1000);
+        GPIOF->ODR |= 0x2000;
+	GPIOF->ODR |= 0x4000;
+	GPIOF->ODR &= ~(0x8000);
 
-		 GPIOE->ODR &= ~(0x1000);
-		 GPIOE->ODR |= 0x4000;
-		 GPIOE->ODR |= 0x8000;
-		 GPIOB->ODR &= ~(0x0400);
+	GPIOE->ODR &= ~(0x1000);
+	GPIOE->ODR |= 0x4000;
+	GPIOE->ODR |= 0x8000;
+	GPIOB->ODR &= ~(0x0400);
 }
 
 /* USER CODE END 4 */
@@ -576,21 +576,21 @@ void HCSR04_Read (void)
 	__HAL_TIM_ENABLE_IT(&htim3, TIM_IT_CC1);
 }
 
-void drivingTask_init(void *argument)
+void drivingTask_init(void *argument) /*장애물 감지를 위한 센서 2개개 동작은 driving Task에 구현*/
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
-	HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
+HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
+HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
   for(;;)
   {
-	  ADC3->CR2 |= 0x40000001;
-	  value2 = ADC3->DR;
+ADC3->CR2 |= 0x40000001;
+value2 = ADC3->DR;
 
-	  distance = (3420-value2)/22.6;
+distance = (3420-value2)/22.6;
 
 
-      TIM4->CCER |= 0x1111;
+TIM4->CCER |= 0x1111;
 
 TIM4->CR1 |= 0x0001;
 
@@ -609,37 +609,37 @@ HAL_UART_Transmit(&huart3,buf,sizeof(buf),0xFFFF);
 HAL_UART_Transmit(&huart3,buf4,sizeof(buf4),0xFFFF);
 if(value1 > 0){
 if(Distance <= 40){
-	Pause();
-	osDelay(1000);
-	back();
-	osDelay(1000);
-	Lrotate();
-	osDelay(1500);
+Pause();
+osDelay(1000);
+back();
+osDelay(1000);
+Lrotate();
+osDelay(1500);
 
 }
 
 else if(distance < 40){
 
-	Pause();
-	osDelay(1000);
-	back();
-	osDelay(1000);
-	Rrotate();
-	osDelay(1500);
+Pause();
+osDelay(1000);
+back();
+osDelay(1000);
+Rrotate();
+osDelay(1500);
 }
 else if(value1 <2000){
 
-	Pause();
-	TIM2->CCR4 = 120;
-	osDelay(500);
-	TIM2->CCR4 = 75;
-	osDelay(5000);
-	TIM2->CCR4 = 30;
-	osDelay(400);
+Pause();
+TIM2->CCR4 = 120;
+osDelay(500);
+TIM2->CCR4 = 75;
+osDelay(5000);
+TIM2->CCR4 = 30;
+osDelay(400);
 }
 else{
-	straight();
-    TIM2->CCR4 = 75;
+straight();
+TIM2->CCR4 = 75;
 }
 }
      }
@@ -652,18 +652,16 @@ void sensorTask_init(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	  ADC1->CR2 |= 0x40000001;
-	 	  ADC3->CR2 |= 0x40000001;
+ ADC1->CR2 |= 0x40000001;
+ ADC3->CR2 |= 0x40000001;
 
-	 	  value1 = ADC1->DR;
-          value2 = ADC3->DR;
+value1 = ADC1->DR;
 
-          distance = (3420-value2)/22.6;
 
-	 	 sprintf(buf2,"%d\r\n",value1);
-       HAL_UART_Transmit(&huart6,buf2,sizeof(buf2),0xFFFF);
+sprintf(buf2,"%d\r\n",value1);
+HAL_UART_Transmit(&huart6,buf2,sizeof(buf2),0xFFFF);
 
-       osDelay(1);
+osDelay(1);
   }
   /* USER CODE END sensorTask_init */
 }
