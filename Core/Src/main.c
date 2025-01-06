@@ -653,8 +653,7 @@ void sensorTask_init(void *argument)
   for(;;)
   {
  ADC1->CR2 |= 0x40000001;
- ADC3->CR2 |= 0x40000001;
-
+	  
 value1 = ADC1->DR;
 
 
