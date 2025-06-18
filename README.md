@@ -17,8 +17,8 @@ H/W회로, S/W(F/W)개발 : 최의현
 ## 기술
 1. FreeRTOS를 이용한 로봇 각각의 작업들을 태스크 분배
 2. 로봇 모터에 들어가는 TIM_CCRegister를 이용한 PWM 펄스 폭 조절
-3. 보다 빠른 Sensor 데이터 접근 및 처리를 위한 ADC Register를 이용
-4. BLE 통신을 이용한 Raspberry PI에 불꽃감지센서 값을 전송 후 PI내에서 모니터링을 위한 CAM 작동
+3. 최소 자원 접근 및 데이터 응답 속도 최적화를 위한 ADC Register를 이용
+4. BLE 통신을 이용한 Raspberry PI에 불꽃감지센서 값을 전송 후 PI내에서 모니터링을 위한 CAM 작동(순찰 목적)
 
 ## FlowChart
 <img src= "https://github.com/user-attachments/assets/13a12957-9ae0-4cc6-bd95-3ea9a0d56fdb" width= "1000" height= "500"/>
