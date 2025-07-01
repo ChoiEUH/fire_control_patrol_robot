@@ -1,5 +1,5 @@
 # 화재 제어 순찰 로봇
-순찰 및 감시를 주 목적으로 두며 가스 및 소형 화재 발생시 로봇의 캠이 사내 컴퓨터에 현장 실시간을 보여줌
+주로 작은 창고 내에서의 순찰 및 감시를 주 목적으로 두며 가스 및 소형 화재 발생시 로봇의 캠이 사내 컴퓨터에 현장 실시간을 보여줌
 <img src="https://github.com/user-attachments/assets/145c48e6-a912-45de-930f-3fe2a6a23835" width= "1000" height= "500"/>
 
 <img src="https://github.com/user-attachments/assets/d1c6d85a-a7e9-48c8-b4ef-6e830db4044d" width= "700" height= "300"/>
