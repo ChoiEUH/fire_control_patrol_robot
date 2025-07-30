@@ -8,14 +8,24 @@
 
 
 uint16_t value1;
-uint16_t value2;
 
+typedef struct{
 uint16_t distance;
+uint16_t value2;
+}IR;
+
+IR r;
+
+
+typedef struct{
 uint32_t IC_Val1 = 0;
 uint32_t IC_Val2 = 0;
 uint32_t Difference = 0;
 uint8_t Is_First_Captured = 0;
 uint8_t Distance  = 0;
+}Ultra;
+
+Ultra u;
 
 
 
@@ -524,37 +534,37 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
 //만약 인터럽트 소스 채널2가 활성화 되면//
 	{
-		if (Is_First_Captured==0) //포착된 초음파 변수가 0이라면//
+		if (u.Is_First_Captured==0) //포착된 초음파 변수가 0이라면//
 		{
-		 IC_Val1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+		 u.IC_Val1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
 // 초음파 읽기 시작 //
-		 Is_First_Captured = 1;
+		 u.Is_First_Captured = 1;
 // 포착된 초음파 변수 설정 //
 
 		 __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_FALLING);
 //폴링엣지에 트리거 되게 설정//
 		}
 
-		else if (Is_First_Captured==1)
+		else if (u.Is_First_Captured==1)
 		{
-			IC_Val2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+			u.IC_Val2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
 			__HAL_TIM_SET_COUNTER(htim, 0);
 //포착 카운터 초기화//
-			if (IC_Val2 > IC_Val1)
+			if (u.IC_Val2 > u.IC_Val1)
 			{
-				Difference = IC_Val2-IC_Val1;
+				u.Difference = u.IC_Val2-u.IC_Val1;
 // 거리 값을 위한 첫번째 벨류값, 두번째 벨류값 차 계산//
 			}
 
-			else if (IC_Val1 > IC_Val2)
+			else if (u.IC_Val1 > u.IC_Val2)
 			{
-				Difference = (0xffff - IC_Val1) + IC_Val2;
+				u.Difference = (0xffff - u.IC_Val1) + u.IC_Val2;
 //오버플로우 계산//
 			}
 
-			Distance = Difference * .034/2;
+			u.Distance = u.Difference * .034/2;
 //음속인 340ms를 곱해서 거리 환산//
-			Is_First_Captured = 0;
+			u.Is_First_Captured = 0;
 // 다시 변수 초기화//
 
 			__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);
@@ -585,9 +595,9 @@ HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);
   for(;;)
   {
 ADC3->CR2 |= 0x40000001;
-value2 = ADC3->DR;
+r.value2 = ADC3->DR;
 
-distance = (3420-value2)/22.6;
+r.distance = (3420-r.value2)/22.6;
 
 
 TIM4->CCER |= 0x1111;
@@ -608,7 +618,7 @@ sprintf(buf4,"2:%d\r\n",distance);
 HAL_UART_Transmit(&huart3,buf,sizeof(buf),0xFFFF);
 HAL_UART_Transmit(&huart3,buf4,sizeof(buf4),0xFFFF);
 if(value1 > 0){
-if(Distance <= 40){
+if(u.Distance <= 40){
 Pause();
 osDelay(1000);
 back();
@@ -618,7 +628,7 @@ osDelay(1500);
 
 }
 
-else if(distance < 40){
+else if(r.distance < 40){
 
 Pause();
 osDelay(1000);
